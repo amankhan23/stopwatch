@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stopwatch</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+
+        #nav {
+            height: 50px;
+            width: 100%;
+            text-align: center;
+            background-color: #6C63FF;
+            color: white;
+            font-size: 1.4rem;
+        }
+
+        #main {
+            background: yellow;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            height :100%;
+            width: 100%;
+            flex-direction: row-reverse;
+            background-size: 100% 100%;
+        }
+
+        .content {position: relative;
+            bottom: 100px;
+            height: 250px;
+            border-radius: 10px;
+            width: 300px;
+
+        }
+
+        #num {
+            width: 250px;
+            height: 250px;
+            text-align: center;
+            border-radius: 50%;
+            background-color: #6C63FF;
+        }
+
+        #watch {
+         text-align: center;
+         background-color: #6C63FF;
+         font-size: 3rem;
+         position: relative;
+         top: 38%;
+         left: 10px;
+         width: 90%;
+         color: white;
+        }
+
+        span {
+            font-size: 3rem;
+        }
+
+        .buttons {
+            position: relative;
+            top: 40px;
+            height: 50px;
+            width: 100%;
+            margin-right: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+        }
+
+        button {
+            cursor: pointer;
+            outline: none;
+            border-radius: 5px;
+            border: 2px solid #6C63FF;
+            margin-right: 13px;
+            height: 40px;
+            font-size: large;
+            width: 100px;
+        }
+
+        img {
+            height: 250px;
+
+        }
+    </style>
+</head>
+
+<body>
+    <nav id="nav">
+        <h1 id="head">Stopwatch</h1>
+    </nav>
+    <div id="main">
+        <div class="content">
+            <div id="num">
+                <div id="watch">00:00:00</div>
+            </div>
+            <div class="buttons">
+                <button id="start" onclick="start()">Start</button>
+                <button onclick="stop()">Stop</button>
+                <button onclick="reset()">Reset</button>
+            </div>
+        </div>
+        <img src="./illustration/undraw_time_management_30iu.svg" alt="">
+    </div>
+    <script>
+        var sec = 0;
+        var min = 0;
+        var msec = 0;
+        var interval;
+
+        var watchHead = document.getElementById("watch");
+
+        function timer() {
+            watchHead.textContent = (min < 10 ? "0" + min : min) + ":" + (sec < 10 ? "0" + sec : sec) + ":" + (msec < 10 ? "0" + msec : msec);
+            msec++
+            if (msec > 99) {
+                msec = 0;
+                sec++
+            }
+            if (sec > 59) {
+                sec = 0;
+                min++;
+            }
+        }
+
+        function start() {
+
+            interval = setInterval(timer, 10);
+            document.getElementById("start").disabled = true;
+        }
+        function stop() {
+            clearInterval(interval);
+            document.getElementById("start").disabled = false;
+        }
+        function reset() {
+            min = 0;
+            sec = 0
+            msec = 0;
+            stop();
+            watchHead.textContent = "00:00:00";
+            document.getElementById("start").disabled = false
+        }
+
+    </script>
+</body>
+
+</html>
